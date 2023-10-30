@@ -11,6 +11,7 @@ function init() {
 }
 
 function estimateStayCost() {
+    
     // get the checkInDate
     const checkInDateInput = document.querySelector('#checkInDate').value;
     // convert checkInDate to a Date 
@@ -21,6 +22,7 @@ function estimateStayCost() {
     let nightRate = 0;
     const queen = document.querySelector('#queen');
     const king = document.querySelector('#king');
+    const suite = document.querySelector('#suite');
 
      // summer month rates
     if (checkInMonth >= 6 && checkInMonth <= 8) {
@@ -56,27 +58,36 @@ function estimateStayCost() {
     // apply taxes
     let taxes = (12/100) * discountedRoomCost;
 
-    //sum of everything 
+    // maxed out room conditional 
+    const queenRoomLimit = 5;
+    const kingRoomLimit = 2;
+    const suiteRoomLimit = 6;
 
-    // get the number of nights stayed
-    const nightsStayed = document.querySelector('#numberOfNights').value;
-    const totalCost = (discountedRoomCost * nightsStayed) + taxes;
+    const totalGuests = parseInt(document.querySelector('#adultGuests').value) + parseInt(document.querySelector('#childrenGuests').value);
+    if(queen.checked && totalGuests > queenRoomLimit || king.checked && totalGuests > kingRoomLimit || suite.checked && totalGuests > suiteRoomLimit) {
+        alert('The room you selected will not hold your party');
+    } else {
+        //sum of everything 
+        // get the number of nights stayed
+        const nightsStayed = document.querySelector('#numberOfNights').value;
+        const totalCost = (discountedRoomCost * nightsStayed) + taxes;
 
-    //outputs 
-    const originalRoomCostOutput = document.querySelector('#originalRoomCost');
-    originalRoomCostOutput.value = nightRate.toFixed(2);
+        //outputs 
+        const originalRoomCostOutput = document.querySelector('#originalRoomCost');
+        originalRoomCostOutput.value = nightRate.toFixed(2);
 
-    const discountAppliedOutput = document.querySelector('#discountApplied');
-    discountApplied.value = `${discount.toFixed(2)} %`;
+        const discountAppliedOutput = document.querySelector('#discountApplied');
+        discountApplied.value = `${discount.toFixed(2)} %`;
 
-    const discountedRoomCostOutput = document.querySelector('#discountedRoomCost');
-    discountedRoomCostOutput.value = discountedRoomCost.toFixed(2);
+        const discountedRoomCostOutput = document.querySelector('#discountedRoomCost');
+        discountedRoomCostOutput.value = discountedRoomCost.toFixed(2);
 
-    const taxOutput = document.querySelector('#tax');
-    taxOutput.value = taxes.toFixed(2);
+        const taxOutput = document.querySelector('#tax');
+        taxOutput.value = taxes.toFixed(2);
 
-    const totalCostOutput =  document.querySelector('#totalCost');
-    totalCostOutput.value = totalCost.toFixed(2);
+        const totalCostOutput =  document.querySelector('#totalCost');
+        totalCostOutput.value = totalCost.toFixed(2);
+    }
 }
 
 function resetForm () {
