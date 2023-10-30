@@ -5,6 +5,9 @@ window.onload = init;
 function init() {
     const costBtn = document.querySelector('#costBtn');
     costBtn.onclick = estimateStayCost;
+
+    const resetbtn = document.querySelector('#resetBtn');
+    resetbtn.onclick = resetForm;
 }
 
 function estimateStayCost() {
@@ -76,3 +79,7 @@ function estimateStayCost() {
     totalCostOutput.value = totalCost.toFixed(2);
 }
 
+function resetForm () {
+    const form = document.querySelector('form');
+    form.reset();
+}
